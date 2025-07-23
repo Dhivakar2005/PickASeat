@@ -22,14 +22,10 @@ const MyBooking = () => {
                 </ul>
                 <div className="search">
                             <img src='/src/assets/Searchicon.png' alt='search' />
-                            {user ? (
-                              <button onClick={handleLogout}>Logout</button>
-                            ) : (
-                              <Link to="/login">
+                            <Link to="/login">
                                 <button>Login</button>
                               </Link>
-                            )}
-                          </div>
+                </div>
             </section>
 
             <div className="my-booking-page">

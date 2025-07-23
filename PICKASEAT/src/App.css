@@ -126,7 +126,7 @@ button {
   background-color: #e53e3e;
 }
 
-/* ========== Banner Section ========== */
+/* Banner */
 .banner {
   height: 100vh;
   display: flex;
@@ -276,7 +276,7 @@ button {
   font-size: 20px;
   
 }
-/* ========== Movie Details ========== */
+/*Movie Details */
 .movie-details {
   display: flex;
   gap: 40px;
@@ -355,7 +355,7 @@ button {
   background-color: #e63a55;
 }
 
-/* ========== Cast Section ========== */
+/* Cast Section  */
 .cast-section {
   padding: 40px 5%;
 }

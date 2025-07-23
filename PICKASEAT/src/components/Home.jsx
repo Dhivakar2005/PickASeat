@@ -85,7 +85,14 @@ const Home = () => {
             In a post-apocalyptic world where cities ride on wheels and consume each other to survive,
             two people meet in London and try to stop a conspiracy.
           </p>
-          <Link to="/booking">
+          <Link to="/booking" state={{
+    movieName: 'Guardians of the Galaxy',
+    movieImage: '/src/assets/backgroundImage.png',
+    selectedDate: new Date().toISOString(),
+    theaterName: 'INOX',
+    theaterLocation: 'Chennai'
+  }}
+>
             <button className="buy-btn">Book Now →</button>
           </Link>
         </div>

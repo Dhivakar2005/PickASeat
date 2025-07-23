@@ -54,15 +54,11 @@ const Payment = () => {
           <li><Link to="/about">About Us</Link></li>
         </ul>
         <div className="search">
-                    <img src='/src/assets/Searchicon.png' alt='search' />
-                    {user ? (
-                      <button onClick={handleLogout}>Logout</button>
-                    ) : (
-                      <Link to="/login">
-                        <button>Login</button>
-                      </Link>
-                    )}
-                  </div>
+          <img src='/src/assets/Searchicon.png' alt='search' />
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+        </div>
       </section>
 
       <div className="payment-page">
