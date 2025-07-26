@@ -16,14 +16,14 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCredentials((prev) => ({ ...prev, [name]: value }));
+    setCredentials(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const success = signup(credentials.name, credentials.email, credentials.password);
     if (success) {
-      toast.success('Signup Successful');
+      toast.success('Signup successful');
       navigate('/');
     } else {
       toast.error('Email already exists');
@@ -31,7 +31,6 @@ const Signup = () => {
   };
 
   return (
-  
     <div className="auth-container">
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
@@ -59,9 +58,7 @@ const Signup = () => {
           onChange={handleChange}
           required
         />
-        <Link to="/login">
         <button type="submit">Sign Up</button>
-        </Link>
       </form>
       <p>Already have an account? <Link to="/login">Login here</Link></p>
     </div>

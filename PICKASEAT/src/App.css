@@ -41,16 +41,22 @@ button {
   height: 70px;
 }
 
-.nav ul {
+.nav section, .nav1 section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.nav ul, .nav1 ul {
   display: flex;
   gap: 20px;
   list-style: none;
   padding: 15px 20px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 25px;
-  backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .nav ul li a {
@@ -62,29 +68,9 @@ button {
 .nav ul li a:hover {
   color: #ff4571;
 }
+
 .nav1 {
   padding: 0 5rem;
-}
-
-.nav1 section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logoo {
-  height: 70px;
-}
-
-.nav1 ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-  padding: 15px 20px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
 }
 
 .nav1 ul li a {
@@ -100,12 +86,22 @@ button {
 .search {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
 .search img {
   height: 24px;
   margin-left: 11px;
+  border-radius: 30px;
   transition: transform 0.3s ease;
+}
+
+.dropdown-content {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  padding: 8px;
+  width: 150px;
 }
 
 .search img:hover {
@@ -221,8 +217,13 @@ button {
   background-color: #1b1e2e;
   padding: 16px;
   border-radius: 10px;
-  width: 250px;
+  width: 100%;
+  max-width: 250px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 .movie-card:hover {
@@ -392,14 +393,14 @@ button {
   transform: scale(1.05);
 }
 
-.cast-list::-webkit-scrollbar {
+/* .cast-list::-webkit-scrollbar {
   height: 6px;
 }
 
 .cast-list::-webkit-scrollbar-thumb {
   background: #444;
   border-radius: 10px;
-}
+} */
 
 /* Date Selector */
 .date-selector {
@@ -440,16 +441,20 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
-  /* background-color: #9b1a1a2e; */
+  background-color: #9b1a1a2e;
   color: #fff9f9;
 }
+
 .date-box:hover {
   background-color: #c7252581;
 }
 
+.date-box.selected-date {
+  background-color: #dc090963 !important;
+}
+
 .date-box .day {
   font-size: 12px;
-  color: #ffffff;
 }
 
 .date-box .date {
@@ -459,16 +464,7 @@ button {
 
 .date-box .month {
   font-size: 12px;
-  color: #ffffff;
 }
-
-.selected-date {
-  background-color: red !important;
-  color: white !important;
-  border-color: red !important;
-}
-
-
 
 .dropdowns {
   display: flex;
@@ -507,7 +503,7 @@ select option {
   transform: translateY(-1px);
 }
 
-/* ========== Booking Section ========== */
+/* Booking Section  */
 .book {
   display: flex;
   justify-content: center;
@@ -679,8 +675,6 @@ select option {
   margin-left: 40px;
 }
 
-
-
 .selected-details h2 {
   padding-left: 20px;
   font-size: 18px;
@@ -705,8 +699,6 @@ select option {
   cursor: not-allowed;
 }
 
-
-
 .seat-button.booked {
     background-color: #999;
     color: white;
@@ -714,7 +706,7 @@ select option {
     opacity: 0.6;
 }
 
-/* ========== Payment ========== */
+/* Payment */
 .payment-page {
   height: 90vh;
   width: 100%;

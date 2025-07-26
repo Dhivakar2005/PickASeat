@@ -12,18 +12,25 @@ export const AuthProvider = ({ children }) => {
 
   const login = (email, password) => {
     const users = JSON.parse(localStorage.getItem('users')) || [];
-    const existingUser = users.find(u => u.email === email && u.password === password);
-    if (existingUser) {
-      localStorage.setItem('user', JSON.stringify(existingUser));
-      setUser(existingUser);
-      return true;
+    const existingUser = users.find(u => u.email === email);
+
+    if (!existingUser) {
+      return { success: false, message: 'User not found. Please sign up first.' };
     }
-    return false;
+
+    if (existingUser.password !== password) {
+      return { success: false, message: 'Incorrect password.' };
+    }
+
+    localStorage.setItem('user', JSON.stringify(existingUser));
+    setUser(existingUser);
+    return { success: true };
   };
 
   const signup = (name, email, password) => {
     const users = JSON.parse(localStorage.getItem('users')) || [];
     if (users.find(u => u.email === email)) return false;
+
     const newUser = { name, email, password };
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Home from './components/Home';
 import Footer from './components/Footer';
 import Details from './components/Details';
@@ -13,31 +14,15 @@ import Signup from './components/Signup';
 const App = () => {
   return (
     <BrowserRouter>
-    
+          <Toaster position="top-center" />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/details/:id" element={<Details />} />
         <Route path="/movies" element={<Movies />} />
-
-        <Route
-          path="/booking"
-          element={
-              <Booking />
-          }
-        />
-        <Route
-          path="/payment"
-          element={
-              <Payment />
-          }
-        />
-        <Route
-          path="/mybooking"
-          element={
-              <MyBooking />
-          }
-        />
-
+        <Route path="/booking" element={<Booking />}/>
+        <Route path="/payment"element={<Payment />}/>
+        <Route path="/mybooking"element={<MyBooking />}/>
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
