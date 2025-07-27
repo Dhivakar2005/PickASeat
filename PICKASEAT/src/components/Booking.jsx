@@ -1,5 +1,5 @@
-import  { useEffect, useState } from 'react';
-import {  Link,useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import './../App.css';
 
@@ -19,24 +19,28 @@ const Booking = () => {
   const [selectedTime, setSelectedTime] = useState(initialSelectedTime || null);
   const [bookedSeats, setBookedSeats] = useState([]);
 
+  const navigate = useNavigate();
+
+  const formatKey = (movie, date, time) => {
+    const formattedDate = new Date(date).toISOString().split('T')[0]; // YYYY-MM-DD
+    return `${movie}-${formattedDate}-${time}`;
+  };
+
   useEffect(() => {
-    if (selectedDate && selectedTime) {
+    if (movieName && selectedDate && selectedTime) {
       const bookings = JSON.parse(localStorage.getItem('bookings')) || {};
-      const key = `${selectedDate}-${selectedTime}`;
+      const key = formatKey(movieName, selectedDate, selectedTime);
       const storedSeats = bookings[key] || [];
       setBookedSeats(storedSeats);
     }
-  }, [selectedDate, selectedTime]);
+  }, [movieName, selectedDate, selectedTime]);
 
   const handleSeatClick = (seatId) => {
     if (!selectedTime) {
       return toast.error('Please select time first');
     }
 
-    const bookings = JSON.parse(localStorage.getItem('bookings')) || {};
-    const key = `${selectedDate}-${selectedTime}`;
-    const latestBookedSeats = bookings[key] || [];
-    if (latestBookedSeats.includes(seatId)) {
+    if (bookedSeats.includes(seatId)) {
       return toast.error('Seat already booked');
     }
 
@@ -54,6 +58,37 @@ const Booking = () => {
   const handleTimeClick = (time) => {
     setSelectedTime(time);
     setSelectedSeats([]);
+  };
+
+  const handleProceedToPay = () => {
+    if (!selectedTime || selectedSeats.length === 0) return;
+
+    const bookings = JSON.parse(localStorage.getItem('bookings')) || {};
+    const key = formatKey(movieName, selectedDate, selectedTime);
+    const alreadyBooked = bookings[key] || [];
+
+    const conflict = selectedSeats.some(seat => alreadyBooked.includes(seat));
+    if (conflict) {
+      toast.error('Some selected seats are already booked. Please refresh.');
+      return;
+    }
+
+    const newBooked = Array.from(new Set([...alreadyBooked, ...selectedSeats]));
+    bookings[key] = newBooked;
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    setBookedSeats(newBooked);
+
+    navigate('/payment', {
+      state: {
+        selectedSeats,
+        selectedDate,
+        selectedTime,
+        movieName,
+        movieImage,
+        theaterName,
+        theaterLocation,
+      },
+    });
   };
 
   const renderSeats = (row, count = 9) => (
@@ -76,32 +111,9 @@ const Booking = () => {
     </div>
   );
 
-  const navigate = useNavigate();
-
-  const handleProceedToPay = () => {
-    if (!selectedTime || selectedSeats.length === 0) return;
-    const bookings = JSON.parse(localStorage.getItem('bookings')) || {};
-    const key = `${selectedDate}-${selectedTime}`;
-    const currentBooked = bookings[key] || [];
-    const newBooked = Array.from(new Set([...currentBooked, ...selectedSeats]));
-    bookings[key] = newBooked;
-    localStorage.setItem('bookings', JSON.stringify(bookings));
-    setBookedSeats(newBooked);
-    navigate('/payment', {
-      state: {
-        selectedSeats,
-        selectedDate,
-        selectedTime,
-        movieName,
-        movieImage,
-        theaterName,
-        theaterLocation,
-      },
-    });
-  };
-
   return (
     <div className="nav1">
+      {/* Navigation */}
       <section className="navbar">
         <img className="logoo" src="/src/assets/logoo.png" alt="Logo" />
         <ul>
@@ -112,9 +124,7 @@ const Booking = () => {
         </ul>
         <div className="search">
           <img src='/src/assets/Searchicon.png' alt='search' />
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
+          <Link to="/login"><button>Login</button></Link>
         </div>
       </section>
 
@@ -164,10 +174,11 @@ const Booking = () => {
 
       <div className="selected-details">
         <h2>Booking Info</h2>
+        <p>Movie: {movieName}</p>
         <p>Selected Date: {selectedDate ? new Date(selectedDate).toLocaleDateString('en-GB') : 'No date selected'}</p>
         <p>Selected Time: {selectedTime || 'None'}</p>
-        {/* <p>Theater: {theaterName || 'Unknown Theater'}</p>
-        <p>Location: {theaterLocation || 'Unknown Location'}</p> */}
+        <p>Theater: {theaterName || 'Unknown Theater'}</p>
+        <p>Location: {theaterLocation || 'Unknown Location'}</p>
       </div>
 
       <div className="book-button-container">
