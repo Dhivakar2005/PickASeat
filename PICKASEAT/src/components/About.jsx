@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import './../App.css';
 
 function About() {
@@ -24,21 +23,6 @@ function About() {
   };
 
   return (
-    <div className="nav1">
-      <section className="navbar">
-        <img className="logoo" src="/src/assets/logoo.png" alt="logo" />
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/movies">Movies</Link></li>
-          <li><Link to="/mybooking">MyBookings</Link></li>
-          <li><Link to="/about">About Us</Link></li>
-        </ul>
-        <div className="search">
-          <img src="/src/assets/Searchicon.png" alt="search" />
-          <button type="submit">Login</button>
-        </div>
-      </section>
-
       <div className="about-page-dark">
         <div className="about-container-dark">
           <div className="about-left-dark">
@@ -86,9 +70,7 @@ function About() {
             <button type="submit" className="dark-btn">Send Message</button>
           </form>
         </div>
-
-      </div>
-    </div>
+</div>
   );
 }
 

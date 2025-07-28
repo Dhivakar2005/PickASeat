@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import './../App.css';
 
@@ -22,7 +22,7 @@ const Booking = () => {
   const navigate = useNavigate();
 
   const formatKey = (movie, date, time) => {
-    const formattedDate = new Date(date).toISOString().split('T')[0]; // YYYY-MM-DD
+    const formattedDate = new Date(date).toISOString().split('T')[0];
     return `${movie}-${formattedDate}-${time}`;
   };
 
@@ -36,14 +36,8 @@ const Booking = () => {
   }, [movieName, selectedDate, selectedTime]);
 
   const handleSeatClick = (seatId) => {
-    if (!selectedTime) {
-      return toast.error('Please select time first');
-    }
-
-    if (bookedSeats.includes(seatId)) {
-      return toast.error('Seat already booked');
-    }
-
+    if (!selectedTime) return toast.error('Please select time first');
+    if (bookedSeats.includes(seatId)) return toast.error('Seat already booked');
     if (!selectedSeats.includes(seatId) && selectedSeats.length >= 5) {
       return toast.error('You can only select 5 seats');
     }
@@ -112,22 +106,8 @@ const Booking = () => {
   );
 
   return (
-    <div className="nav1">
-      {/* Navigation */}
-      <section className="navbar">
-        <img className="logoo" src="/src/assets/logoo.png" alt="Logo" />
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/movies">Movies</Link></li>
-          <li><Link to="/mybooking">MyBookings</Link></li>
-          <li><Link to="/about">About Us</Link></li>
-        </ul>
-        <div className="search">
-          <img src='/src/assets/Searchicon.png' alt='search' />
-          <Link to="/login"><button>Login</button></Link>
-        </div>
-      </section>
-
+    <div className="booking-page">
+  
       <div className="book">
         <div className="time">
           <h1>Available Timing</h1>

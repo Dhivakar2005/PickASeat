@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import movies from './Movie';
 import './../App.css';
@@ -43,24 +42,8 @@ const Movies = () => {
   );
 
   return (
-    <div className="nav1">
-      {/* Navbar */}
-      <section className="navbar">
-        <img className="logoo" src={"/src/assets/logoo.png"} alt="Logo" />
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/movies">Movies</Link></li>
-          <li><Link to="/mybooking">MyBookings</Link></li>
-          <li><Link to="/about">About Us</Link></li>
-        </ul>
-        <div className="search">
-          <img src='/src/assets/Searchicon.png' alt='search' />
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
-        </div>
-      </section>
-
+    <div className='movies-page'>
+      
       {renderMovieSection("Recently Watched", recentlyWatched, "recent")}
       {renderMovieSection("Suggestions", suggestions, "suggestion")}
       {renderMovieSection("Now Showing", nowShowing, "now")}

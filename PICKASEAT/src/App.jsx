@@ -10,12 +10,13 @@ import Movies from './components/Movies';
 import About from './components/About';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Navbar from './components/Navbar';
 
 const App = () => {
   return (
     <BrowserRouter>
           <Toaster position="top-center" />
-
+          <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/details/:id" element={<Details />} />

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import './../App.css';
+import  { useState } from 'react';
 import toast from 'react-hot-toast';
+import {useLocation, useNavigate} from 'react-router-dom';
+import './../App.css';
 
 const Payment = () => {
   const location = useLocation();
@@ -44,23 +44,6 @@ const Payment = () => {
   };
 
   return (
-    <div className="nav1">
-      <section className="navbar">
-        <img className="logoo" src="/src/assets/logoo.png" alt="logo" />
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/movies">Movies</Link></li>
-          <li><Link to="/mybooking">MyBookings</Link></li>
-          <li><Link to="/about">About Us</Link></li>
-        </ul>
-        <div className="search">
-          <img src='/src/assets/Searchicon.png' alt='search' />
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
-        </div>
-      </section>
-
       <div className="payment-page">
         <div
           className="ticket-card-glass"
@@ -102,13 +85,9 @@ const Payment = () => {
               <span>{theaterLocation || 'Unknown Location'}</span>
             </div>
           </div>
-
-       
-
           <button className="pay-btn" onClick={handlePayment}>Pay Now →</button>
         </div>
       </div>
-    </div>
   );
 };
 

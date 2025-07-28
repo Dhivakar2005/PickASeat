@@ -1,24 +1,36 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import './../App.css';
 import movies from './Movie';
+import './../App.css';
 
 const Details = () => {
-  const { id } = useParams(); // Getting movie ID from URL
   const [selectedDate, setSelectedDate] = useState(null);
   const [startIndex, setStartIndex] = useState(0);
   const [theater, setTheater] = useState('');
   const [location, setLocation] = useState('');
+
+  const { id } = useParams();
+  const movie = movies.find((m) => m.id === id);
+
+  if (!movie) return <h2>Movie not found</h2>;
+
+  const getRandomUniqueMovies = (moviesArray, count) => {
+    const shuffled = [...moviesArray].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+  const youalsoknow = getRandomUniqueMovies(movies, 4);
 
   const generateDatesForYear = () => {
     const start = new Date();
     const end = new Date(start.getFullYear(), 11, 31);
     const dateArray = [];
     let current = new Date(start);
-
     while (current <= end) {
       const iso = current.toISOString();
-      const formatted = current.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+      const formatted = current.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+      });
       dateArray.push({ label: formatted, date: iso });
       current.setDate(current.getDate() + 1);
     }
@@ -30,30 +42,39 @@ const Details = () => {
 
   const handleDateClick = (date) => setSelectedDate(date);
   const handlePrev = () => setStartIndex((prev) => Math.max(prev - 7, 0));
-  const handleNext = () => setStartIndex((prev) => (prev + 7 >= dates.length ? prev : prev + 7));
+  const handleNext = () =>
+    setStartIndex((prev) => (prev + 7 >= dates.length ? prev : prev + 7));
 
-  const movie = movies.find((m) => m.id === id);
-
-  if (!movie) return <h2>Movie not found</h2>;
+  const renderMovieSection = (title, movieList, sectionKey) => (
+    <>
+      <div className="movies-h">
+        <span>{title}</span>
+      </div>
+      <div className="movie-list">
+        {movieList.map((movie) => (
+          <div className="movie-card" key={`${sectionKey}-${movie.id}`}>
+            <div
+              className="movie-image"
+              style={{ backgroundImage: `url(${movie.image})` }}
+            ></div>
+            <h3 className="movie-title">{movie.title}</h3>
+            <p className="movie-info">
+              {movie.year} • {movie.genre} • {movie.duration}
+            </p>
+            <div className="movie-footer">
+              <Link to={`/details/${movie.id}`}>
+                <button className="buy-button">Buy Tickets</button>
+              </Link>
+              <div className="rating">⭐ {movie.rating}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
 
   return (
     <div className="details-page">
-      <div className="nav1">
-        <section className="navbar">
-          <img className="logoo" src="/src/assets/logoo.png" alt="Logo" />
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/movies">Movies</Link></li>
-            <li><Link to="/mybooking">MyBookings</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-          </ul>
-          <div className="search">
-            <img src="/src/assets/Searchicon.png" alt="search" />
-            <Link to="/login"><button>Login</button></Link>
-          </div>
-        </section>
-      </div>
-
       <section className="movie-details">
         <div className="poster">
           <img src={movie.image} alt={movie.title} />
@@ -68,7 +89,11 @@ const Details = () => {
           </p>
           <div className="actions">
             <button className="trailer-btn">
-              <a href="https://youtu.be/22w7z_lT6YM?si=o5ZHyQPmOkZmIcAI" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://youtu.be/22w7z_lT6YM?si=o5ZHyQPmOkZmIcAI"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 🎬 Watch Trailer
               </a>
             </button>
@@ -100,6 +125,7 @@ const Details = () => {
           <button onClick={handlePrev} disabled={startIndex === 0}>{'<'}</button>
           {visibleDates.map((item, idx) => {
             const isSelected =
+              selectedDate &&
               new Date(item.date).toDateString() === new Date(selectedDate).toDateString();
             return (
               <span
@@ -112,7 +138,9 @@ const Details = () => {
                 </span>
                 <span className="date">{new Date(item.date).getDate()}</span>
                 <span className="month">
-                  {new Date(item.date).toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
+                  {new Date(item.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                  }).toUpperCase()}
                 </span>
               </span>
             );
@@ -144,7 +172,7 @@ const Details = () => {
             movieName: movie.title,
             movieImage: movie.image,
             theaterName: theater,
-            theaterLocation: location
+            theaterLocation: location,
           }}
         >
           <button
@@ -155,6 +183,10 @@ const Details = () => {
             Book Now
           </button>
         </Link>
+      </section>
+
+      <section>
+        {renderMovieSection('You also know', youalsoknow, 'you')}
       </section>
     </div>
   );

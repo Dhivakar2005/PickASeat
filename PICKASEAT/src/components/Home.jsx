@@ -1,21 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import movies from './Movie';
 import './../App.css';
 
 const Home = () => {
-  const [open, setOpen] = useState(false);
   const [showMoreRow1, setShowMoreRow1] = useState(false);
   const [showMoreRow2, setShowMoreRow2] = useState(false);
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
+  
   const shuffleArray = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
   const shuffled = shuffleArray(movies);
@@ -26,7 +17,7 @@ const Home = () => {
 
   const renderMovieRow = (label, movies, extra, showMore, toggleShowMore) => (
     <>
-      <div className="movie-headig">
+      <div className="heading">
         <span className="vh">{label}</span>
         <button className="visit" onClick={toggleShowMore}>
           {showMore ? 'Show Less' : 'Show More'}
@@ -57,39 +48,8 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="nav">
-        <section className="navbar">
-          <img className="logoo" src="/src/assets/logoo.png" alt="logo" />
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/movies">Movies</Link></li>
-            <li><Link to="/mybooking">MyBookings</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-          </ul>
-          <div className="search">
-            <img src="/src/assets/Searchicon.png" alt="search" />
-            {user ? (
-              <div className="dropdown" style={{ position: 'relative', display: 'inline-block' }}>
-                <img
-                  src="/src/assets/profile.png"
-                  alt="Profile"
-                  onClick={() => setOpen(!open)}
-                  style={{ width: '30px', height: '30px', cursor: 'pointer' }}
-                />
-                {open && (
-                  <div className="dropdown-content">
-                    <button onClick={handleLogout}>Log Out</button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link to="/signup">
-                <button>Sign up</button>
-              </Link>
-            )}
-          </div>
-        </section>
-
+      {/* <Navbar/> */}
+      <div className="ban">
         <div className="banner">
           <img className="mlogo" src="/src/assets/marvel.png" alt="Marvel Logo" />
           <h1>
